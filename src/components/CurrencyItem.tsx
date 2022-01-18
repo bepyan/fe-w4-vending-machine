@@ -13,7 +13,7 @@ export const CurrencyItem = ({ item, onClick }: Props) => {
 
     return (
         <Wrapper isActive={isActive} onClick={() => onClick(item)}>
-            <CurrencyUnit isActive={isActive}>{renderMoney(item.currenyUnit)}원</CurrencyUnit>
+            <CurrencyUnit isActive={isActive}>{renderMoney(item.currencyUnit)}원</CurrencyUnit>
             <div>{item.cnt}개</div>
         </Wrapper>
     );

@@ -11,7 +11,7 @@ interface Props {
 
 export const WalletView = ({ walletDataList, onClickCurrencyItem }: Props) => {
     const totalMoney = useMemo(
-        () => walletDataList.reduce((ac, v) => ac + v.currenyUnit * v.cnt, 0),
+        () => walletDataList.reduce((ac, v) => ac + v.currencyUnit * v.cnt, 0),
         [walletDataList],
     );
 

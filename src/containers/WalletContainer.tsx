@@ -16,7 +16,7 @@ export const WalletContainer = ({ insertMoney }: Props) => {
 
     const decreaseWalletMoney = (item: IWalletItem) => {
         const newDataList = [...walletDataList];
-        const target = newDataList.find((v) => v.currenyUnit === item.currenyUnit);
+        const target = newDataList.find((v) => v.currencyUnit === item.currencyUnit);
         if (!target || !target.cnt) return;
 
         target.cnt--;
@@ -26,7 +26,7 @@ export const WalletContainer = ({ insertMoney }: Props) => {
     const onClickCurrencyItem = (item: IWalletItem) => {
         if (!item.cnt) return;
 
-        insertMoney(item.currenyUnit);
+        insertMoney(item.currencyUnit);
         decreaseWalletMoney(item);
     };
 
