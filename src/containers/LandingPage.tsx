@@ -1,5 +1,5 @@
 import { IProductStock, IWalletItem } from '@types';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { LandingLayout, VendingMachineView, VideoBackground, WalletView } from '../components';
 import {
     getCurrencyUnitList,
@@ -14,6 +14,8 @@ export const NON_LOADED_PRODUCT_ID = -1;
 
 const LandingPage = () => {
     const [insertedMoney, setInsertedMoney] = useState(0);
+    const insertedMoneyRef = useRef(insertedMoney);
+    insertedMoneyRef.current = insertedMoney;
 
     const [productStockList, setProductStockList] = useState<IProductStock[]>([]);
     const [progressLogList, setProgressLogList] = useState<string[]>([]);
@@ -58,6 +60,9 @@ const LandingPage = () => {
     const startCountDown = () => {
         setCountdown(COUNTDOWN_TIME);
     };
+    const startCountDownIfRemain = useCallback(() => {
+        if (insertedMoneyRef.current) startCountDown();
+    }, [insertedMoney]);
 
     const stopCountDown = () => {
         setCountdown(0);
@@ -73,11 +78,12 @@ const LandingPage = () => {
         setTimeout(() => {
             pushLogList(`${product.name}(이)가 배출 되었습니다.`);
             setOnloadingProductId(NON_LOADED_PRODUCT_ID);
-            if (!!insertedMoney) startCountDown();
+            startCountDownIfRemain();
         }, PRODUCT_RELEASE_DELAY);
 
-        setInsertedMoney((prevState) => prevState - product.price);
-        startCountDown();
+        const newInsertedMoney = insertedMoney - product.price;
+        setInsertedMoney(newInsertedMoney);
+        if (newInsertedMoney) startCountDown();
     };
 
     // 내 지갑 유틸
