@@ -1,25 +1,27 @@
 import { IProductStock } from '@types';
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { renderMoney } from '../utils';
 import { VendingItem } from './VendingItem';
 
 interface Props {
+    countdown: number;
     insertedMoney: number;
+    loadingProductId: number;
     productStockList: IProductStock[];
     progressLogList: string[];
     onClickVendingItem: (product: IProductStock) => void;
     onClickReturnMoney: () => void;
-    loadingProductId: number;
 }
 
 export const VendingMachineView = ({
+    countdown,
     insertedMoney,
+    loadingProductId,
     productStockList,
     progressLogList,
     onClickVendingItem,
     onClickReturnMoney,
-    loadingProductId,
 }: Props) => {
     const renderVendingItems = () => {
         return productStockList.map((product: IProductStock) => (
@@ -47,7 +49,14 @@ export const VendingMachineView = ({
                     <span className="txt__unit">원</span>
                 </MoneyDisplayWrapper>
 
-                <ReturnButton onClick={onClickReturnMoney}>반환</ReturnButton>
+                <ReturnButton isActive={!!insertedMoney} onClick={onClickReturnMoney}>
+                    반환
+                </ReturnButton>
+
+                <CountdownText isActive={!!countdown}>
+                    {countdown}
+                    <span className="txt__desc">초 후 금액이 반환됩니다.</span>
+                </CountdownText>
 
                 <StatusDisplayWrapper>{renderProgressLogs()}</StatusDisplayWrapper>
             </ProgressView>
@@ -106,7 +115,7 @@ const ProgressView = styled.div`
     }
 `;
 
-const ReturnButton = styled.button`
+const ReturnButton = styled.button<{ isActive: boolean }>`
     margin: 2rem;
     padding: 1rem 0;
     cursor: pointer;
@@ -119,9 +128,31 @@ const ReturnButton = styled.button`
     color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
 
-    transition: background-color 300ms ease-out;
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+    ${({ isActive }) =>
+        isActive
+            ? css`
+                  transition: background-color 300ms ease-out;
+                  &:hover {
+                      background-color: rgba(255, 255, 255, 0.2);
+                  }
+              `
+            : css`
+                  opacity: 0.5;
+                  cursor: not-allowed;
+              `}
+`;
+
+const CountdownText = styled.p<{ isActive: boolean }>`
+    margin: 0rem auto;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: opacity 200ms ease-in-out;
+    opacity: ${(props) => (props.isActive ? 1 : 0)};
+
+    .txt__desc {
+        font-size: 1rem;
+        font-weight: normal;
+        margin-left: 4px;
     }
 `;
 

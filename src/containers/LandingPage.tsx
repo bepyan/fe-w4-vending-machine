@@ -4,6 +4,7 @@ import { VendingItem, VendingMachineView, VideoBackground, WalletView } from '..
 import { getCurrencyUnitList, getMyWalletDataList, getProductStockList } from '../utils';
 
 const PRODUCT_RELEASE_DELAY = 2000;
+const COUNTDOWN_TIME = 5;
 
 const LandingPage = () => {
     const [insertedMoney, setInsertedMoney] = useState(0);
@@ -13,11 +14,25 @@ const LandingPage = () => {
     const [throttleId, setThrottleId] = useState(-1);
 
     const [walletDataList, setWalletDataList] = useState<IWalletItem[]>([]);
+    const [countdown, setCountdown] = useState(0);
 
     useEffect(() => {
         setProductStockList(getProductStockList());
         setWalletDataList(getMyWalletDataList());
     }, []);
+
+    useEffect(() => {
+        if (!countdown) {
+            returnMoney();
+            return;
+        }
+
+        const timer = setInterval(() => {
+            setCountdown(countdown - 1);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [countdown]);
 
     // 자판기 유틸
 
@@ -34,8 +49,17 @@ const LandingPage = () => {
         setProgressLogList((prevState) => [...prevState, newLog]);
     };
 
+    const startCountDown = () => {
+        setCountdown(COUNTDOWN_TIME);
+    };
+
     const onClickVendingItem = (product: IProductStock) => {
         if (product.stock === 0) return;
+
+        if (throttleId > -1) {
+            pushLogList('상품 배출중 입니다...');
+            return;
+        }
 
         setThrottleId(product.id);
         decreaseProductStock(product);
@@ -43,7 +67,9 @@ const LandingPage = () => {
             pushLogList(`${product.name}(이)가 선택됨.`);
             setThrottleId(-1);
         }, PRODUCT_RELEASE_DELAY);
+
         setInsertedMoney((prevState) => prevState - product.price);
+        startCountDown();
     };
 
     // 내 지갑 유틸
@@ -53,6 +79,8 @@ const LandingPage = () => {
     };
 
     const returnMoney = () => {
+        if (!insertedMoney) return;
+
         const currencyUnitList = getCurrencyUnitList();
         const newWalletDataList = [...walletDataList];
 
@@ -71,6 +99,7 @@ const LandingPage = () => {
             }
         }
 
+        pushLogList(`잔돈 ${insertedMoney}원 반환.`);
         setInsertedMoney(0);
         setWalletDataList(newWalletDataList);
     };
@@ -93,18 +122,20 @@ const LandingPage = () => {
 
         insertMoney(item.currencyUnit);
         decreaseWalletMoney(item);
+        startCountDown();
     };
 
     return (
         <>
             <VideoBackground />
             <VendingMachineView
+                countdown={countdown}
                 insertedMoney={insertedMoney}
+                loadingProductId={throttleId}
                 productStockList={productStockList}
                 progressLogList={progressLogList}
                 onClickVendingItem={onClickVendingItem}
                 onClickReturnMoney={onClickReturnMoney}
-                loadingProductId={throttleId}
             />
             <WalletView walletDataList={walletDataList} onClickCurrencyItem={onClickCurrencyItem} />
         </>

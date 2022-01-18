@@ -7,7 +7,7 @@ declare module '@types' {
     }
 
     interface IWalletItem {
-        currenyUnit: number;
+        currencyUnit: number;
         cnt: number;
     }
 }
