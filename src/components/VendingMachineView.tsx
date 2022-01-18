@@ -5,20 +5,21 @@ import { VendingItem } from './VendingItem';
 
 interface Props {
     productStockList: IProductStock[];
-    onProductClick: (productStockList: IProductStock[]) => void;
+    progressLogList: string[];
+    onProductClick: (product: IProductStock) => void;
     onProgress: (progressLog: string) => void;
 }
 
 export const VendingMachineView = (props: Props) => {
+    const { productStockList, progressLogList, onProductClick, onProgress } = props;
+
     const onItemClickHandler = (product: IProductStock) => {
-        const newProductStockList = [...props.productStockList];
-        newProductStockList[product.id].stock -= 1;
-        props.onProductClick(newProductStockList);
-        props.onProgress(`${product.name}(이)가 선택됨.`);
+        onProductClick(product);
+        onProgress(`${product.name}(이)가 선택됨.`);
     };
 
     const renderVendingItems = () => {
-        return productStockList.map((product) => (
+        return productStockList.map((product: IProductStock) => (
             <VendingItem
                 key={product.id}
                 product={product}
@@ -27,11 +28,13 @@ export const VendingMachineView = (props: Props) => {
         ));
     };
 
+    const renderProgressLogs = () => {
+        return progressLogList.map((log: string, i) => <p key={i}>{log}</p>);
+    };
+
     return (
         <VendingMachineWrapper>
-            <ProductView>
-                {renderVendingItems(props.productStockList, onItemClickHandler)}
-            </ProductView>
+            <ProductView>{renderVendingItems()}</ProductView>
 
             <ProgressView>
                 <h1>카카오 자판기</h1>
@@ -43,11 +46,7 @@ export const VendingMachineView = (props: Props) => {
 
                 <ReturnButton>반환</ReturnButton>
 
-                <StatusDisplayWrapper>
-                    <p>500원이 투입되었음.</p>
-                    <p>콜라가 선택 됨.</p>
-                    <p>잔돈 500원 반환</p>
-                </StatusDisplayWrapper>
+                <StatusDisplayWrapper>{renderProgressLogs()}</StatusDisplayWrapper>
             </ProgressView>
         </VendingMachineWrapper>
     );

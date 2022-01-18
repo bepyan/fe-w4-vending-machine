@@ -4,20 +4,15 @@ import styled, { css } from 'styled-components';
 
 interface Props {
     onItemClickHandler: (product: IProductStock) => void;
-    product: {
-        name: string;
-        price: number;
-    };
+    product: IProductStock;
 }
 
 export const VendingItem = (props: Props) => {
-const selectProduct = (
-    product: IProductStock,
-    onItemClickHandler: (product: IProductStock) => void,
-) => {
-    if (product.stock === 0) return;
-    onItemClickHandler(product);
-};
+    const { onItemClickHandler, product } = props;
+    const selectProduct = () => {
+        if (product.stock === 0) return;
+        onItemClickHandler(product);
+    };
 
     return (
         <Wrapper isSeletable={true} onClick={selectProduct}>
