@@ -9,3 +9,8 @@ export const getProductStockList = (): IProductStock[] => {
 export const getMyWalletDataList = (): IWalletItem[] => {
     return myWalletDataList;
 };
+
+export const getCurrencyUnitList = () => {
+    const set = new Set<number>(myWalletDataList.map((v) => v.currencyUnit));
+    return Array.from(set).sort((a, b) => b - a);
+};

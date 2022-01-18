@@ -8,14 +8,18 @@ interface Props {
     insertedMoney: number;
     productStockList: IProductStock[];
     progressLogList: string[];
-    releaseProduct: (product: IProductStock) => void;
+    onClickVendingItem: (product: IProductStock) => void;
+    onClickReturnMoney: () => void;
+    loadingProductId: number;
 }
 
 export const VendingMachineView = ({
     insertedMoney,
     productStockList,
     progressLogList,
-    releaseProduct,
+    onClickVendingItem,
+    onClickReturnMoney,
+    loadingProductId,
 }: Props) => {
     const renderVendingItems = () => {
         return productStockList.map((product: IProductStock) => (
@@ -23,7 +27,8 @@ export const VendingMachineView = ({
                 key={product.id}
                 product={product}
                 isSelectable={product.price <= insertedMoney}
-                onItemClickHandler={releaseProduct}
+                isOnLoading={product.id === loadingProductId}
+                onClick={onClickVendingItem}
             />
         ));
     };
@@ -42,7 +47,7 @@ export const VendingMachineView = ({
                     <span className="txt__unit">원</span>
                 </MoneyDisplayWrapper>
 
-                <ReturnButton>반환</ReturnButton>
+                <ReturnButton onClick={onClickReturnMoney}>반환</ReturnButton>
 
                 <StatusDisplayWrapper>{renderProgressLogs()}</StatusDisplayWrapper>
             </ProgressView>

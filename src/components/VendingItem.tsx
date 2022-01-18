@@ -5,22 +5,18 @@ import styled, { css } from 'styled-components';
 interface Props {
     product: IProductStock;
     isSelectable: boolean;
-    onItemClickHandler: (product: IProductStock) => void;
+    isOnLoading: boolean;
+    onClick: (product: IProductStock) => void;
 }
 
-export const VendingItem = ({ product, isSelectable, onItemClickHandler }: Props) => {
+export const VendingItem = ({ product, isSelectable, isOnLoading, onClick }: Props) => {
     const isItemActive = useMemo(
         () => isSelectable && !!product.stock,
         [product.stock, isSelectable],
     );
 
-    const selectProduct = () => {
-        if (product.stock === 0) return;
-
-        onItemClickHandler(product);
-    };
-
     return (
+        <Wrapper isActive={isItemActive} onClick={() => onClick(product)}>
         <Wrapper isActive={isItemActive} onClick={selectProduct}>
             <Title>{product.name}</Title>
             <Price>
