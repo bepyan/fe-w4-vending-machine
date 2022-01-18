@@ -1,5 +1,5 @@
 import { IProductStock } from '@types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { NON_LOADED_PRODUCT_ID } from '../containers/LandingPage';
 import { renderMoney } from '../utils';
@@ -24,6 +24,12 @@ export const VendingMachineView = ({
     onClickVendingItem,
     onClickReturnMoney,
 }: Props) => {
+    const statusDisplayBottomRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        statusDisplayBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [progressLogList]);
+
     const renderVendingItems = () => {
         return productStockList.map((product: IProductStock) => (
             <VendingItem
@@ -61,7 +67,10 @@ export const VendingMachineView = ({
                     <span className="txt__desc">초 후 금액이 반환됩니다.</span>
                 </CountdownText>
 
-                <StatusDisplayWrapper>{renderProgressLogs()}</StatusDisplayWrapper>
+                <StatusDisplayWrapper>
+                    {renderProgressLogs()}
+                    <div ref={statusDisplayBottomRef}></div>
+                </StatusDisplayWrapper>
             </ProgressView>
         </VendingMachineWrapper>
     );
