@@ -34,7 +34,7 @@ const LandingPage = () => {
         }
 
         const timer = setInterval(() => {
-            setCountdown(countdown - 1);
+            setCountdown((prevState) => prevState - 1);
         }, 1000);
 
         return () => clearInterval(timer);
@@ -77,6 +77,7 @@ const LandingPage = () => {
         setTimeout(() => {
             pushLogList(`${product.name}(이)가 선택됨.`);
             setOnloadingProductId(NON_LOADED_PRODUCT_ID);
+            if (!!insertedMoney) startCountDown();
         }, PRODUCT_RELEASE_DELAY);
 
         setInsertedMoney((prevState) => prevState - product.price);
@@ -132,7 +133,7 @@ const LandingPage = () => {
     const onClickCurrencyItem = (item: IWalletItem) => {
         if (!item.cnt) return;
 
-        pushLogList(`${item.currencyUnit}원이 투입되었음.`);
+        pushLogList(`${renderMoney(item.currencyUnit)}원이 투입되었음.`);
         insertMoney(item.currencyUnit);
         decreaseWalletMoney(item);
         startCountDown();
