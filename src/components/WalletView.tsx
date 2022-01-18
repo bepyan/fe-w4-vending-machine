@@ -1,21 +1,32 @@
-import React from 'react';
+import { IWalletItem } from '@types';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { renderMoney } from '../utils';
 import { CurrencyItem } from './CurrencyItem';
 
-interface Props {}
+interface Props {
+    walletDataList: IWalletItem[];
+    onClickCurrencyItem: (item: IWalletItem) => void;
+}
 
-export const WalletView = (props: Props) => {
+export const WalletView = ({ walletDataList, onClickCurrencyItem }: Props) => {
+    const totalMoney = useMemo(
+        () => walletDataList.reduce((ac, v) => ac + v.currenyUnit * v.cnt, 0),
+        [walletDataList],
+    );
+
     return (
         <WalletWrapper>
             <h1>내 지갑</h1>
 
             <CurrencyItemWrapper>
-                <CurrencyItem />
-                <CurrencyItem />
+                {walletDataList.map((v, idx) => (
+                    <CurrencyItem key={idx} item={v} onClick={onClickCurrencyItem} />
+                ))}
             </CurrencyItemWrapper>
 
             <TotalMoneyWrapper>
-                <span className="txt__money">{23550}</span>
+                <span className="txt__money">{renderMoney(totalMoney)}</span>
                 <span className="txt__unit">원</span>
             </TotalMoneyWrapper>
         </WalletWrapper>

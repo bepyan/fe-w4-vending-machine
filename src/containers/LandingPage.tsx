@@ -35,7 +35,6 @@ const LandingPage = () => {
     };
 
     const insertMoney = (money: number) => {
-        console.log(money);
         setInsertedMoney((prevState) => prevState + money);
     };
 
@@ -48,11 +47,7 @@ const LandingPage = () => {
                 progressLogList={progressLogList}
                 releaseProduct={releaseProduct}
             />
-            <WalletContainer
-                insertMoney={insertMoney}
-                // onCoinClick={setInsertMoney}
-                // onProgress={pushLogList}
-            />
+            <WalletContainer insertMoney={insertMoney} />
         </>
     );
 };

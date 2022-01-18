@@ -5,4 +5,9 @@ declare module '@types' {
         price: number;
         stock: number;
     }
+
+    interface IWalletItem {
+        currenyUnit: number;
+        cnt: number;
+    }
 }

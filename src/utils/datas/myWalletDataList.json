@@ -1,0 +1,10 @@
+[
+    { "currenyUnit": 10, "cnt": 0 },
+    { "currenyUnit": 50, "cnt": 1 },
+    { "currenyUnit": 100, "cnt": 5 },
+    { "currenyUnit": 500, "cnt": 5 },
+    { "currenyUnit": 1000, "cnt": 2 },
+    { "currenyUnit": 5000, "cnt": 2 },
+    { "currenyUnit": 10000, "cnt": 1 },
+    { "currenyUnit": 50000, "cnt": 2 }
+]
