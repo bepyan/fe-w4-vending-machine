@@ -15,7 +15,7 @@ export const VendingItem = (props: Props) => {
     };
 
     return (
-        <Wrapper isSeletable={true} onClick={selectProduct}>
+        <Wrapper isSelectable={true} onClick={selectProduct}>
             <Title>{product.name}</Title>
             <Price>
                 <span>{product.price}</span>
@@ -26,7 +26,7 @@ export const VendingItem = (props: Props) => {
     );
 };
 
-const Wrapper = styled.div<{ isSeletable: boolean }>`
+const Wrapper = styled.div<{ isSelectable: boolean }>`
     display: flex;
     flex-direction: column;
     background-color: var(--content-bg);
@@ -35,8 +35,8 @@ const Wrapper = styled.div<{ isSeletable: boolean }>`
     padding: 1rem;
     user-select: none;
 
-    ${({ isSeletable }) =>
-        isSeletable
+    ${({ isSelectable }) =>
+        isSelectable
             ? css`
                   cursor: pointer;
                   transition: transform 300ms ease-in-out;
