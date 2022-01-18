@@ -37,10 +37,7 @@ const WalletWrapper = styled.div`
     flex: 1;
     color: var(--theme-color);
     background-color: var(--theme-bg-color);
-    width: 100%;
     height: 100%;
-    max-width: 1250px;
-    max-height: 860px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -54,9 +51,11 @@ const WalletWrapper = styled.div`
 `;
 
 const CurrencyItemWrapper = styled.div`
-    padding: 0px 2rem;
+    padding: 0px 2rem 2rem;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    overflow-y: scroll;
     & > div + div {
         margin-top: 0.5rem;
     }

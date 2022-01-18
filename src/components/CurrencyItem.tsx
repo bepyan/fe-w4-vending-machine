@@ -12,8 +12,10 @@ export const CurrencyItem = ({ item, onClick }: Props) => {
     const isActive = !!item.cnt;
 
     return (
-        <Wrapper isActive={isActive} onClick={() => onClick(item)}>
-            <CurrencyUnit isActive={isActive}>{renderMoney(item.currencyUnit)}원</CurrencyUnit>
+        <Wrapper isActive={isActive}>
+            <CurrencyUnit isActive={isActive} onClick={() => onClick(item)}>
+                {renderMoney(item.currencyUnit)}원
+            </CurrencyUnit>
             <div>{item.cnt}개</div>
         </Wrapper>
     );

@@ -1,7 +1,12 @@
 import { IProductStock, IWalletItem } from '@types';
 import React, { useEffect, useState } from 'react';
-import { VendingItem, VendingMachineView, VideoBackground, WalletView } from '../components';
-import { getCurrencyUnitList, getMyWalletDataList, getProductStockList } from '../utils';
+import { LandingLayout, VendingMachineView, VideoBackground, WalletView } from '../components';
+import {
+    getCurrencyUnitList,
+    getMyWalletDataList,
+    getProductStockList,
+    renderMoney,
+} from '../utils';
 
 const PRODUCT_RELEASE_DELAY = 2000;
 const COUNTDOWN_TIME = 5;
@@ -99,7 +104,7 @@ const LandingPage = () => {
             }
         }
 
-        pushLogList(`잔돈 ${insertedMoney}원 반환.`);
+        pushLogList(`잔돈 ${renderMoney(insertedMoney)}원 반환.`);
         setInsertedMoney(0);
         setWalletDataList(newWalletDataList);
     };
@@ -128,16 +133,21 @@ const LandingPage = () => {
     return (
         <>
             <VideoBackground />
-            <VendingMachineView
-                countdown={countdown}
-                insertedMoney={insertedMoney}
-                loadingProductId={throttleId}
-                productStockList={productStockList}
-                progressLogList={progressLogList}
-                onClickVendingItem={onClickVendingItem}
-                onClickReturnMoney={onClickReturnMoney}
-            />
-            <WalletView walletDataList={walletDataList} onClickCurrencyItem={onClickCurrencyItem} />
+            <LandingLayout>
+                <VendingMachineView
+                    countdown={countdown}
+                    insertedMoney={insertedMoney}
+                    loadingProductId={throttleId}
+                    productStockList={productStockList}
+                    progressLogList={progressLogList}
+                    onClickVendingItem={onClickVendingItem}
+                    onClickReturnMoney={onClickReturnMoney}
+                />
+                <WalletView
+                    walletDataList={walletDataList}
+                    onClickCurrencyItem={onClickCurrencyItem}
+                />
+            </LandingLayout>
         </>
     );
 };

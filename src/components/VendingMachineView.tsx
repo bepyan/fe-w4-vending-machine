@@ -66,13 +66,9 @@ export const VendingMachineView = ({
 
 const VendingMachineWrapper = styled.div`
     flex: 3;
+    display: flex;
     color: var(--theme-color);
     background-color: var(--theme-bg-color);
-    width: 100%;
-    height: 100%;
-    max-width: 1250px;
-    max-height: 860px;
-    display: flex;
     overflow: hidden;
     border-radius: 14px;
     backdrop-filter: blur(20px);
@@ -105,6 +101,15 @@ const ProductView = styled.div`
     background-color: var(--theme-bg-color);
     height: 100%;
     padding: 2rem;
+    overflow-y: scroll;
+
+    @media screen and (max-width: 1080px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media screen and (max-width: 720px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 `;
 
 const ProgressView = styled.div`
