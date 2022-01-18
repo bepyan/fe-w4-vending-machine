@@ -1,5 +1,5 @@
 import { IProductStock } from '@types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 
 interface Props {
@@ -9,6 +9,11 @@ interface Props {
 }
 
 export const VendingItem = ({ product, isSelectable, onItemClickHandler }: Props) => {
+    const isItemActive = useMemo(
+        () => isSelectable && !!product.stock,
+        [product.stock, isSelectable],
+    );
+
     const selectProduct = () => {
         if (product.stock === 0) return;
 
@@ -16,18 +21,22 @@ export const VendingItem = ({ product, isSelectable, onItemClickHandler }: Props
     };
 
     return (
-        <Wrapper isSelectable={isSelectable} onClick={selectProduct}>
+        <Wrapper isActive={isItemActive} onClick={selectProduct}>
             <Title>{product.name}</Title>
             <Price>
                 <span>{product.price}</span>
                 <span className="txt__unit">원</span>
             </Price>
-            <div>{product.stock}</div>
+
+            <Stock isActive={!!product.stock}>
+                {product.stock}
+                <span className="txt__unit">개 남음</span>
+            </Stock>
         </Wrapper>
     );
 };
 
-const Wrapper = styled.div<{ isSelectable: boolean }>`
+const Wrapper = styled.div<{ isActive: boolean }>`
     display: flex;
     flex-direction: column;
     background-color: var(--content-bg);
@@ -36,8 +45,8 @@ const Wrapper = styled.div<{ isSelectable: boolean }>`
     padding: 1rem;
     user-select: none;
 
-    ${({ isSelectable }) =>
-        isSelectable
+    ${({ isActive }) =>
+        isActive
             ? css`
                   cursor: pointer;
                   transition: transform 300ms ease-in-out;
@@ -60,7 +69,23 @@ const Title = styled.div`
 const Price = styled.div`
     margin-top: auto;
     .txt__unit {
-        font-size: 14px;
+        font-size: 12px;
         margin-left: 2px;
+        opacity: 0.8;
+    }
+`;
+
+const Stock = styled.div<{ isActive: boolean }>`
+    transition: opacity 200ms ease-in-out;
+    ${({ isActive }) =>
+        !isActive &&
+        css`
+            opacity: 0;
+        `}
+
+    .txt__unit {
+        font-size: 12px;
+        margin-left: 2px;
+        opacity: 0.8;
     }
 `;

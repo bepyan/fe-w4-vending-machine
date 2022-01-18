@@ -18,7 +18,11 @@ const LandingPage = () => {
 
     const decreaseProductStock = (product: IProductStock) => {
         const newProductStockList = [...productStockList];
-        newProductStockList[product.id].stock -= 1;
+        const target = newProductStockList.find((v) => v.id === product.id);
+        if (!target || !target.stock) return;
+
+        target.stock--;
+        setProductStockList(newProductStockList);
     };
 
     const pushLogList = (newLog: string) => {
@@ -31,7 +35,7 @@ const LandingPage = () => {
             pushLogList(`${product.name}(이)가 선택됨.`);
         }, PRODUCT_RELEASE_DELAY);
         // insertedMoney를 상품의 가격만큼 차감
-        // setInsertedMoney((prevState) => prevState - product.price)
+        setInsertedMoney((prevState) => prevState - product.price);
     };
 
     const insertMoney = (money: number) => {
