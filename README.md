@@ -1,5 +1,19 @@
 # fe-w4-vending-machine
 
+### 내용
+
+-   React
+    -   함수형 컴포넌트
+    -   TypeScript
+    -   Container-Presenter 패턴
+-   styled-components
+    -   Glassmorphism 적용
+-   vscode live share를 통한 페어 프로그래밍
+
+<br>
+
+### 역할 분담
+
 edward.kk
 
 -   [ x ] 마크업 구현
@@ -11,17 +25,9 @@ edward.kk
 milly.on
 
 -   [ x ] 마크업 데이터 바인딩
--   [ x ] 자판기 상품 선택 2초 이후 배출(throttling 적용)
+-   [ x ] 자판기 상품 선택 2초 이후 배출
 -   [ x ] 자판기 상품 선택 가능여부 표시
 -   [ x ] 자판기 상품 선택 로딩 표시
 -   [ x ] 진행 화면 렌더링
 
 <br>
-
--   [ ] 코드 리팩토링
-
-<br>
-
-### 고민한 점.
-
-productStockList를 json 타입으로 작성하면 더 편하지 않을까?
