@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/fe-w4-vending-machine/static/js/main.77f9bbc3.js",
+    "main.js": "/fe-w4-vending-machine/static/js/main.52ea406c.js",
     "static/media/spinner.svg": "/fe-w4-vending-machine/static/media/spinner.7f937069527c36c14f9172662cff9c7b.svg",
     "index.html": "/fe-w4-vending-machine/index.html",
-    "main.77f9bbc3.js.map": "/fe-w4-vending-machine/static/js/main.77f9bbc3.js.map"
+    "main.52ea406c.js.map": "/fe-w4-vending-machine/static/js/main.52ea406c.js.map"
   },
   "entrypoints": [
-    "static/js/main.77f9bbc3.js"
+    "static/js/main.52ea406c.js"
   ]
 }
