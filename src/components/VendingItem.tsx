@@ -1,6 +1,8 @@
 import { IProductStock } from '@types';
 import React, { useMemo } from 'react';
 import styled, { css } from 'styled-components';
+import { renderMoney } from '../utils';
+import { ReactComponent as Loading } from '../images/spinner.svg';
 
 interface Props {
     product: IProductStock;
@@ -17,10 +19,14 @@ export const VendingItem = ({ product, isSelectable, isOnLoading, onClick }: Pro
 
     return (
         <Wrapper isActive={isItemActive} onClick={() => onClick(product)}>
-        <Wrapper isActive={isItemActive} onClick={selectProduct}>
+            <LoadingWrapper isLoading={isOnLoading}>
+                <Loading width="75px" height="75px" />
+            </LoadingWrapper>
+
             <Title>{product.name}</Title>
+
             <Price>
-                <span>{product.price}</span>
+                <span>{renderMoney(product.price)}</span>
                 <span className="txt__unit">원</span>
             </Price>
 
@@ -32,7 +38,13 @@ export const VendingItem = ({ product, isSelectable, isOnLoading, onClick }: Pro
     );
 };
 
+const LoadingWrapper = styled.div<{ isLoading: boolean }>`
+    position: absolute;
+    display: ${({ isLoading }) => (isLoading ? 'block' : 'none')};
+`;
+
 const Wrapper = styled.div<{ isActive: boolean }>`
+    position: relative;
     display: flex;
     flex-direction: column;
     background-color: var(--content-bg);

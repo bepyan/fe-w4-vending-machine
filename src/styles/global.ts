@@ -34,10 +34,6 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 2rem;
-        & > * + * {
-            margin-right: 1rem;
-        }
     }
 
     ::-webkit-scrollbar {
