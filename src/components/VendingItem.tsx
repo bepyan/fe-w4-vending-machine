@@ -3,19 +3,20 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 interface Props {
-    onItemClickHandler: (product: IProductStock) => void;
     product: IProductStock;
+    isSelectable: boolean;
+    onItemClickHandler: (product: IProductStock) => void;
 }
 
-export const VendingItem = (props: Props) => {
-    const { onItemClickHandler, product } = props;
+export const VendingItem = ({ product, isSelectable, onItemClickHandler }: Props) => {
     const selectProduct = () => {
         if (product.stock === 0) return;
+
         onItemClickHandler(product);
     };
 
     return (
-        <Wrapper isSelectable={true} onClick={selectProduct}>
+        <Wrapper isSelectable={isSelectable} onClick={selectProduct}>
             <Title>{product.name}</Title>
             <Price>
                 <span>{product.price}</span>

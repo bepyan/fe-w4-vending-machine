@@ -1,36 +1,34 @@
 import { IProductStock } from '@types';
 import React from 'react';
 import styled from 'styled-components';
+import { renderMoney } from '../utils';
 import { VendingItem } from './VendingItem';
 
 interface Props {
+    insertedMoney: number;
     productStockList: IProductStock[];
     progressLogList: string[];
-    onProductClick: (product: IProductStock) => void;
-    onProgress: (progressLog: string) => void;
+    releaseProduct: (product: IProductStock) => void;
 }
 
-export const VendingMachineView = (props: Props) => {
-    const { productStockList, progressLogList, onProductClick, onProgress } = props;
-
-    const onItemClickHandler = (product: IProductStock) => {
-        onProductClick(product);
-        onProgress(`${product.name}(이)가 선택됨.`);
-    };
-
+export const VendingMachineView = ({
+    insertedMoney,
+    productStockList,
+    progressLogList,
+    releaseProduct,
+}: Props) => {
     const renderVendingItems = () => {
         return productStockList.map((product: IProductStock) => (
             <VendingItem
                 key={product.id}
                 product={product}
-                onItemClickHandler={onItemClickHandler}
+                isSelectable={product.price <= insertedMoney}
+                onItemClickHandler={releaseProduct}
             />
         ));
     };
 
-    const renderProgressLogs = () => {
-        return progressLogList.map((log: string, i) => <p key={i}>{log}</p>);
-    };
+    const renderProgressLogs = () => progressLogList.map((log: string, i) => <p key={i}>{log}</p>);
 
     return (
         <VendingMachineWrapper>
@@ -40,7 +38,7 @@ export const VendingMachineView = (props: Props) => {
                 <h1>카카오 자판기</h1>
 
                 <MoneyDisplayWrapper>
-                    <span className="txt__money">{1000}</span>
+                    <span className="txt__money">{renderMoney(insertedMoney)}</span>
                     <span className="txt__unit">원</span>
                 </MoneyDisplayWrapper>
 
