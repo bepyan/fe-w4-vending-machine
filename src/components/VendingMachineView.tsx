@@ -1,13 +1,14 @@
 import { IProductStock } from '@types';
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { NON_LOADED_PRODUCT_ID } from '../containers/LandingPage';
 import { renderMoney } from '../utils';
 import { VendingItem } from './VendingItem';
 
 interface Props {
     countdown: number;
     insertedMoney: number;
-    loadingProductId: number;
+    onloadingProductId: number;
     productStockList: IProductStock[];
     progressLogList: string[];
     onClickVendingItem: (product: IProductStock) => void;
@@ -17,7 +18,7 @@ interface Props {
 export const VendingMachineView = ({
     countdown,
     insertedMoney,
-    loadingProductId,
+    onloadingProductId,
     productStockList,
     progressLogList,
     onClickVendingItem,
@@ -28,8 +29,10 @@ export const VendingMachineView = ({
             <VendingItem
                 key={product.id}
                 product={product}
-                isSelectable={product.price <= insertedMoney}
-                isOnLoading={product.id === loadingProductId}
+                isSelectable={
+                    product.price <= insertedMoney && onloadingProductId === NON_LOADED_PRODUCT_ID
+                }
+                isOnloading={product.id === onloadingProductId}
                 onClick={onClickVendingItem}
             />
         ));

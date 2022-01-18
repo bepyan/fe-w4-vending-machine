@@ -10,13 +10,14 @@ import {
 
 const PRODUCT_RELEASE_DELAY = 2000;
 const COUNTDOWN_TIME = 5;
+export const NON_LOADED_PRODUCT_ID = -1;
 
 const LandingPage = () => {
     const [insertedMoney, setInsertedMoney] = useState(0);
 
     const [productStockList, setProductStockList] = useState<IProductStock[]>([]);
     const [progressLogList, setProgressLogList] = useState<string[]>([]);
-    const [throttleId, setThrottleId] = useState(-1);
+    const [onloadingProductId, setOnloadingProductId] = useState(NON_LOADED_PRODUCT_ID);
 
     const [walletDataList, setWalletDataList] = useState<IWalletItem[]>([]);
     const [countdown, setCountdown] = useState(0);
@@ -61,16 +62,17 @@ const LandingPage = () => {
     const onClickVendingItem = (product: IProductStock) => {
         if (product.stock === 0) return;
 
-        if (throttleId > -1) {
+        if (onloadingProductId > NON_LOADED_PRODUCT_ID) {
             pushLogList('상품 배출중 입니다...');
             return;
         }
 
-        setThrottleId(product.id);
+        setOnloadingProductId(product.id);
         decreaseProductStock(product);
+
         setTimeout(() => {
             pushLogList(`${product.name}(이)가 선택됨.`);
-            setThrottleId(-1);
+            setOnloadingProductId(NON_LOADED_PRODUCT_ID);
         }, PRODUCT_RELEASE_DELAY);
 
         setInsertedMoney((prevState) => prevState - product.price);
@@ -104,7 +106,7 @@ const LandingPage = () => {
             }
         }
 
-        pushLogList(`잔돈 ${renderMoney(insertedMoney)}원 반환.`);
+        pushLogList(`잔돈 ${renderMoney(insertedMoney)}원 반환되었음.`);
         setInsertedMoney(0);
         setWalletDataList(newWalletDataList);
     };
@@ -125,6 +127,7 @@ const LandingPage = () => {
     const onClickCurrencyItem = (item: IWalletItem) => {
         if (!item.cnt) return;
 
+        pushLogList(`${item.currencyUnit}원이 투입되었음.`);
         insertMoney(item.currencyUnit);
         decreaseWalletMoney(item);
         startCountDown();
@@ -137,7 +140,7 @@ const LandingPage = () => {
                 <VendingMachineView
                     countdown={countdown}
                     insertedMoney={insertedMoney}
-                    loadingProductId={throttleId}
+                    onloadingProductId={onloadingProductId}
                     productStockList={productStockList}
                     progressLogList={progressLogList}
                     onClickVendingItem={onClickVendingItem}

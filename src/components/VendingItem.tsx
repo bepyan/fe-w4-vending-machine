@@ -7,19 +7,19 @@ import { ReactComponent as Loading } from '../images/spinner.svg';
 interface Props {
     product: IProductStock;
     isSelectable: boolean;
-    isOnLoading: boolean;
+    isOnloading: boolean;
     onClick: (product: IProductStock) => void;
 }
 
-export const VendingItem = ({ product, isSelectable, isOnLoading, onClick }: Props) => {
+export const VendingItem = ({ product, isSelectable, isOnloading, onClick }: Props) => {
     const isItemActive = useMemo(
-        () => isSelectable && !!product.stock,
-        [product.stock, isSelectable],
+        () => isSelectable && !!product.stock && !isOnloading,
+        [product.stock, isSelectable, isOnloading],
     );
 
     return (
         <Wrapper isActive={isItemActive} onClick={() => onClick(product)}>
-            <LoadingWrapper isLoading={isOnLoading}>
+            <LoadingWrapper isLoading={isOnloading}>
                 <Loading width="75px" height="75px" />
             </LoadingWrapper>
 
