@@ -40,7 +40,16 @@ export const VendingItem = ({ product, isSelectable, isOnloading, onClick }: Pro
 
 const LoadingWrapper = styled.div<{ isLoading: boolean }>`
     position: absolute;
-    display: ${({ isLoading }) => (isLoading ? 'block' : 'none')};
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: ${({ isLoading }) => (isLoading ? 'visible' : 'hidden')};
 `;
 
 const Wrapper = styled.div<{ isActive: boolean }>`
@@ -53,11 +62,12 @@ const Wrapper = styled.div<{ isActive: boolean }>`
     padding: 1rem;
     user-select: none;
 
+    transition: all 300ms ease-in-out;
+
     ${({ isActive }) =>
         isActive
             ? css`
                   cursor: pointer;
-                  transition: transform 300ms ease-in-out;
                   &:hover {
                       transform: scale(1.02);
                       background-color: var(--theme-bg-color);

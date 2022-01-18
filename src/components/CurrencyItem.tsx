@@ -25,6 +25,8 @@ const Wrapper = styled.div<{ isActive: boolean }>`
     display: flex;
     align-items: center;
     user-select: none;
+    
+    transition: opacity 400ms ease-in-out;
     ${({ isActive }) =>
         !isActive &&
         css`

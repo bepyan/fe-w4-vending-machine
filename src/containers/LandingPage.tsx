@@ -66,16 +66,12 @@ const LandingPage = () => {
     const onClickVendingItem = (product: IProductStock) => {
         if (product.stock === 0) return;
 
-        if (onloadingProductId > NON_LOADED_PRODUCT_ID) {
-            pushLogList('상품 배출중 입니다...');
-            return;
-        }
-
+        pushLogList(`${product.name} 배출중 입니다...`);
         setOnloadingProductId(product.id);
         decreaseProductStock(product);
 
         setTimeout(() => {
-            pushLogList(`${product.name}(이)가 선택됨.`);
+            pushLogList(`${product.name}(이)가 배출 되었습니다.`);
             setOnloadingProductId(NON_LOADED_PRODUCT_ID);
             if (!!insertedMoney) startCountDown();
         }, PRODUCT_RELEASE_DELAY);
@@ -111,7 +107,7 @@ const LandingPage = () => {
             }
         }
 
-        pushLogList(`잔돈 ${renderMoney(insertedMoney)}원 반환되었음.`);
+        pushLogList(`잔돈 ${renderMoney(insertedMoney)}원 반환되었습니다.`);
         setInsertedMoney(0);
         setWalletDataList(newWalletDataList);
     };
@@ -133,7 +129,7 @@ const LandingPage = () => {
     const onClickCurrencyItem = (item: IWalletItem) => {
         if (!item.cnt) return;
 
-        pushLogList(`${renderMoney(item.currencyUnit)}원이 투입되었음.`);
+        pushLogList(`${renderMoney(item.currencyUnit)}원이 투입되었습니다.`);
         insertMoney(item.currencyUnit);
         decreaseWalletMoney(item);
         startCountDown();

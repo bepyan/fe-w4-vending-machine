@@ -181,6 +181,6 @@ const StatusDisplayWrapper = styled.div`
     overflow-y: scroll;
 
     & > * + * {
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
     }
 `;
