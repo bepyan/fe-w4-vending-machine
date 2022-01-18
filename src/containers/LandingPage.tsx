@@ -59,6 +59,10 @@ const LandingPage = () => {
         setCountdown(COUNTDOWN_TIME);
     };
 
+    const stopCountDown = () => {
+        setCountdown(0);
+    };
+
     const onClickVendingItem = (product: IProductStock) => {
         if (product.stock === 0) return;
 
@@ -122,6 +126,7 @@ const LandingPage = () => {
 
     const onClickReturnMoney = () => {
         returnMoney();
+        stopCountDown();
     };
 
     const onClickCurrencyItem = (item: IWalletItem) => {
