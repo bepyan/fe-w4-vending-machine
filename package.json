@@ -4,14 +4,10 @@
     "private": true,
     "homepage": "https://bepyan.github.io/fe-w4-vending-machine",
     "dependencies": {
-        "@types/node": "^16.11.19",
-        "@types/react": "^17.0.38",
-        "@types/react-dom": "^17.0.11",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-scripts": "5.0.0",
-        "styled-components": "^5.3.3",
-        "typescript": "^4.5.4"
+        "styled-components": "^5.3.3"
     },
     "resolutions": {
         "mini-css-extract-plugin": "2.4.5"
@@ -40,11 +36,15 @@
         ]
     },
     "devDependencies": {
+        "@types/node": "^16.11.19",
+        "@types/react": "^17.0.38",
+        "@types/react-dom": "^17.0.11",
         "@types/styled-components": "^5.1.20",
         "eslint": "^8.7.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
         "gh-pages": "^3.2.3",
+        "typescript": "^4.5.4",
         "prettier": "2.5.1"
     }
 }
