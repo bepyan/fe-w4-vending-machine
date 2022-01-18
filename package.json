@@ -2,7 +2,7 @@
     "name": "fe-w4-vending-machine",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://bepyan.github.io/fe-w4-vending-machine/",
+    "homepage": "https://bepyan.github.io/fe-w4-vending-machine",
     "dependencies": {
         "@types/node": "^16.11.19",
         "@types/react": "^17.0.38",
